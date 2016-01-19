@@ -16,7 +16,8 @@
     "name": "Nicolas Swoboda"
   },
   "license": "SEE LICENSE IN FILE LICENSE",
-  "homepage": "",
+  "homepage": "https://github.com/Git-me-outta-here/react-parallel-coordinates.git",
+  "bugs": "https://github.com/Git-me-outta-here/react-parallel-coordinates/issues",
   "devDependencies": {
     "babel": "^6.1.18",
     "babel-core": "^6.1.21",
