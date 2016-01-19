@@ -5,7 +5,7 @@ A ReactJS wrapper for the [parallel coordinates d3 toolkit] (https://github.com/
 
 See how the component is used in the example.
 
-"var ParallelCoordinatesComponent=require('<path>/react-parallel-coordinates.js')" should be sufficient.
+`var ParallelCoordinatesComponent=require('react-parallel-coordinates')` should be sufficient.
 
 ### See the example:
 

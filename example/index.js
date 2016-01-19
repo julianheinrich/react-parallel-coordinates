@@ -2,7 +2,7 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import ParallelCoordinatesComponent from '../parallel-coordinates-react-wrapper.js'
+import ParallelCoordinatesComponent from '../'//react-parallel-coordinates.js'
 
 
 class PCTest extends React.Component {
