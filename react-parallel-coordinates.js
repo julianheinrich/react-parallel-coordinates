@@ -1,10 +1,10 @@
 'use strict';
 
-import React from 'react'
-import ReactDOM from 'react-dom'
-import _ from 'lodash'
-import d3 from 'd3'
-import parcoords from './parallel-coordinates/d3.parcoords.js'
+var React = require ('react')
+var ReactDOM = require ('react-dom')
+var _ = require ('lodash')
+var d3 = require ('d3')
+var parcoords = require ('./parallel-coordinates/d3.parcoords.js')
 
 require('./parallel-coordinates/d3.parcoords.css'); // TODO: find a css solution that refrains from using globals
 
@@ -97,9 +97,8 @@ class ParallelCoordinatesComponent extends React.Component {
 			height: this.props.height,
 			position: 'relative'
 		};
-		return (
-			<div className={'parcoords'} style={style}></div>
-		)
+		//return (<div className={'parcoords'} style={style}></div>)
+		return React.createElement('div', { className: 'parcoords', style: style });
 	}
 }
 
