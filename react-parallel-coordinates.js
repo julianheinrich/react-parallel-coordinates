@@ -48,8 +48,12 @@ class ParallelCoordinatesComponent extends React.Component {
 
 		var ratio = 100/this.props.data.length;
 
-		let types = _.zipObject(_.map(this.props.dimensions, (d)=>{return d.key}), _.map(this.props.dimensions, (d)=>{return d.type}))
+		let types = _.zipObject(_.map(this.props.dimensions, (d, key)=>{return key}), _.map(this.props.dimensions, (d)=>{return d.type}))
 
+		//let dimensions = _.map(this.props.dimensions, (d, key)=>{return key})
+		//let dimensionTitles = _.map(this.props.dimensions, (d)=>{return d.description})
+		let dimensions = _.map(this.props.dimensionsVisible, (d, key)=>{return d.value})
+		let dimensionTitles = _.map(this.props.dimensionsVisible, (d, key)=>{return d.label})
 
 		this.pc = this.pc
 			.data(this.props.data)
@@ -59,9 +63,9 @@ class ParallelCoordinatesComponent extends React.Component {
 			//
 			// TODO: once dimensions-metadata is available in d3 par coords, this will be a single call
 			.types(types)
-			.dimensions(_.map(this.props.dimensions, (d)=>{return d.key}))
+			.dimensions(dimensions)
 			// show/hide dimensions [0,1,2,3,4,5]
-			.dimensionTitles(_.map(this.props.dimensions, (d)=>{return d.key}))
+			.dimensionTitles(dimensionTitles)
 			.render()
 			.shadows()
 			////////////.commonScale(false, "number", [0,1])
@@ -80,16 +84,33 @@ class ParallelCoordinatesComponent extends React.Component {
 			this.pc.setBrushExtents(this.props.initialBrushExtents)
 		}
 		//this.pc.render()
-	}/*
-	componentDidUpdate: function () { // update w/ new data http://blog.siftscience.com/blog/2015/4/6/d-threeact-how-sift-science-made-d3-react-besties
+	}
+	componentDidUpdate () { // update w/ new data http://blog.siftscience.com/blog/2015/4/6/d-threeact-how-sift-science-made-d3-react-besties
 		console.log('componentDidUpdate')
-	},
+		var self = this
+		
+		let dimensions = _.map(this.props.dimensionsVisible, (d, key)=>{return d.value})
+		let dimensionTitles = _.map(this.props.dimensionsVisible, (d, key)=>{return d.label})
+		this.pc = this.pc
+			.dimensions(dimensions)
+			.dimensionTitles(dimensionTitles)
+			.autoscale()
+			.render()
+			.shadows()
+			.createAxes()
+			.reorderable()
+			.brushMode("None") // enable brushing
+			.brushMode("1D-axes") // enable brushing
+			.on("brushend", function (d) { self.onBrushEnd(d) })
+			.on("brush", function (d) { self.onBrush(d) })
+		
+	}/*,
 	componentWillUnmount: function () { // clean up
 		console.log('componentWillUnmount')
 	},*/
 	shouldComponentUpdate (nextProps, nextState) {
-		return false
-		//return (nextProps !== this.props)
+		//return false
+		return (nextProps !== this.props)
 	}
 	render () {
 		var style = {
