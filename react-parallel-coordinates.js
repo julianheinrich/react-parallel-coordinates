@@ -18,7 +18,7 @@ class ParallelCoordinatesComponent extends React.Component {
 		methods.forEach( (method) => this[method] = this[method].bind(this) );
 	}
 	onBrushEnd (data) {
-		data = _.map(data, function (d) { return ({ id: d.id, name: d.name }) })
+		//data = _.map(data, function (d) { return ({ id: d.id, name: d.name }) })
 		this.props.onBrushEnd_data(data)
 		let ratio = 100/data.length
 		this.pc.alpha( _.min([1,_.max([ratio,0.04])]) ).render()
