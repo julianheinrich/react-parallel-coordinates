@@ -89,20 +89,29 @@ class ParallelCoordinatesComponent extends React.Component {
 		console.log('componentDidUpdate')
 		var self = this
 		
+		// keep brush
+		let brushExtents = this.pc.brushExtents()
+		
 		let dimensions = _.map(this.props.dimensionsVisible, (d, key)=>{return d.value})
 		let dimensionTitles = _.map(this.props.dimensionsVisible, (d, key)=>{return d.label})
 		this.pc = this.pc
 			.dimensions(dimensions)
 			.dimensionTitles(dimensionTitles)
 			.autoscale()
+			.unhighlight([])
 			.render()
 			.shadows()
 			.createAxes()
 			.reorderable()
 			.brushMode("None") // enable brushing
 			.brushMode("1D-axes") // enable brushing
+			.brushExtents(brushExtents)
 			.on("brushend", function (d) { self.onBrushEnd(d) })
 			.on("brush", function (d) { self.onBrush(d) })
+			
+		if (this.props.dataHighlighted !== undefined && this.props.dataHighlighted.length > 0) {
+			this.pc = this.pc.highlight(this.props.dataHighlighted)
+		}
 		
 	}/*,
 	componentWillUnmount: function () { // clean up
@@ -110,7 +119,12 @@ class ParallelCoordinatesComponent extends React.Component {
 	},*/
 	shouldComponentUpdate (nextProps, nextState) {
 		//return false
-		return (nextProps !== this.props)
+		
+		return (
+			(JSON.stringify(nextProps.dimensionsVisible) !== JSON.stringify(this.props.dimensionsVisible)) ||
+			(JSON.stringify(nextProps.dataHighlighted) !== JSON.stringify(this.props.dataHighlighted))
+			)
+		//return (nextProps !== this.props)
 	}
 	render () {
 		var style = {
