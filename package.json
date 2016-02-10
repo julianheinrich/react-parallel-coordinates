@@ -1,6 +1,6 @@
 {
   "name": "react-parallel-coordinates",
-  "version": "0.1.7",
+  "version": "0.1.6",
   "description": "A ReactJS wrapper for the parallel coordinates d3 toolkit.",
   "scripts": {
     "start": "node ./example/server.js"

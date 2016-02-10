@@ -8,32 +8,29 @@ var parcoords = require ('./parallel-coordinates/d3.parcoords.js')
 
 require('./parallel-coordinates/d3.parcoords.css'); // TODO: find a css solution that refrains from using globals
 
-class ParallelCoordinatesComponent extends React.Component {
-	constructor (props) {
-		super(props)
-		this.state={ }
-		this._bind('onBrushEnd','onBrush');
-	}
-	_bind(...methods) {
-		methods.forEach( (method) => this[method] = this[method].bind(this) );
-	}
-	onBrushEnd (data) {
+var ParallelCoordinatesComponent = React.createClass ({
+	getDefaultProps: function() {
+		return {
+			state: {}
+		};
+	},
+	onBrushEnd: function (data) {
 		//data = _.map(data, function (d) { return ({ id: d.id, name: d.name }) })
 		this.props.onBrushEnd_data(data)
-		let ratio = 100/data.length
+		var ratio = 100/data.length
 		this.pc.alpha( _.min([1,_.max([ratio,0.04])]) ).render()
 		this.props.onBrushEnd_extents(this.pc.brushExtents())
 		//console.log(ratio);
-	}
-	onBrush (data) {
-		let ratio = 100/data.length
+	},
+	onBrush: function (data) {
+		var ratio = 100/data.length
 		this.pc.alpha( _.min([1,_.max([ratio,0.04])]) ).render()
 		this.props.onBrush_extents(this.pc.brushExtents())
-	}
-	componentDidMount () { // component is now in the DOM
+	},
+	componentDidMount: function () { // component is now in the DOM
 
 		var self = this
-		let DOMNode = ReactDOM.findDOMNode(this)
+		var DOMNode = ReactDOM.findDOMNode(this)
 
 		this.pc = d3.parcoords({
 				//alpha: 0.2,
@@ -48,12 +45,12 @@ class ParallelCoordinatesComponent extends React.Component {
 
 		var ratio = 100/this.props.data.length;
 
-		let types = _.zipObject(_.map(this.props.dimensions, (d, key)=>{return key}), _.map(this.props.dimensions, (d)=>{return d.type}))
+		var types = _.zipObject(_.map(this.props.dimensions, (d, key)=>{return key}), _.map(this.props.dimensions, (d)=>{return d.type}))
 
-		//let dimensions = _.map(this.props.dimensions, (d, key)=>{return key})
-		//let dimensionTitles = _.map(this.props.dimensions, (d)=>{return d.description})
-		let dimensions = _.map(this.props.dimensionsVisible, (d, key)=>{return d.value})
-		let dimensionTitles = _.map(this.props.dimensionsVisible, (d, key)=>{return d.label})
+		//var dimensions = _.map(this.props.dimensions, (d, key)=>{return key})
+		//var dimensionTitles = _.map(this.props.dimensions, (d)=>{return d.description})
+		var dimensions = _.map(this.props.dimensionsVisible, (d, key)=>{return d.value})
+		var dimensionTitles = _.map(this.props.dimensionsVisible, (d, key)=>{return d.label})
 
 		this.pc = this.pc
 			.data(this.props.data)
@@ -84,16 +81,16 @@ class ParallelCoordinatesComponent extends React.Component {
 			this.pc.setBrushExtents(this.props.initialBrushExtents)
 		}
 		//this.pc.render()
-	}
-	componentDidUpdate () { // update w/ new data http://blog.siftscience.com/blog/2015/4/6/d-threeact-how-sift-science-made-d3-react-besties
-		console.log('componentDidUpdate')
+	},
+	componentDidUpdate: function () { // update w/ new data http://blog.siftscience.com/blog/2015/4/6/d-threeact-how-sift-science-made-d3-react-besties
+		//console.log('componentDidUpdate')
 		var self = this
 		
 		// keep brush
-		let brushExtents = this.pc.brushExtents()
+		var brushExtents = this.pc.brushExtents()
 		
-		let dimensions = _.map(this.props.dimensionsVisible, (d, key)=>{return d.value})
-		let dimensionTitles = _.map(this.props.dimensionsVisible, (d, key)=>{return d.label})
+		var dimensions = _.map(this.props.dimensionsVisible, (d, key)=>{return d.value})
+		var dimensionTitles = _.map(this.props.dimensionsVisible, (d, key)=>{return d.label})
 		this.pc = this.pc
 			.dimensions(dimensions)
 			.dimensionTitles(dimensionTitles)
@@ -113,11 +110,11 @@ class ParallelCoordinatesComponent extends React.Component {
 			this.pc = this.pc.highlight(this.props.dataHighlighted)
 		}
 		
-	}/*,
+	},/*,
 	componentWillUnmount: function () { // clean up
 		console.log('componentWillUnmount')
 	},*/
-	shouldComponentUpdate (nextProps, nextState) {
+	shouldComponentUpdate: function (nextProps, nextState) {
 		//return false
 		
 		return (
@@ -125,8 +122,8 @@ class ParallelCoordinatesComponent extends React.Component {
 			(JSON.stringify(nextProps.dataHighlighted) !== JSON.stringify(this.props.dataHighlighted))
 			)
 		//return (nextProps !== this.props)
-	}
-	render () {
+	},
+	render: function () {
 		var style = {
 			width: this.props.width,
 			height: this.props.height,
@@ -135,7 +132,7 @@ class ParallelCoordinatesComponent extends React.Component {
 		//return (<div className={'parcoords'} style={style}></div>)
 		return React.createElement('div', { className: 'parcoords', style: style });
 	}
-}
+})
 
 
 module.exports = ParallelCoordinatesComponent;
