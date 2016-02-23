@@ -28,7 +28,7 @@ class PCTest extends React.Component {
 			height, // size of the plot in px
 			width,
 			dimensions, // array of objects; compare format: http://bl.ocks.org/syntagmatic/0d1635533f6fb5ac4da3
-			//initialBrushExtents, // set initial brush extents, change them with ??? ParallelCoordinatesComponent. ???
+			initialBrushExtents, // set initial brush extents, change them with ??? ParallelCoordinatesComponent. ???
 			onBrush_extents, // this is called with current brush extents
 			onBrushEnd_extents, // same
 			onBrushEnd_data, // this is called with the complete data of all brushed items
@@ -41,6 +41,7 @@ class PCTest extends React.Component {
 				<ParallelCoordinatesComponent data={data} height={height} width={width}
 					dimensions={dimensions}
 					dimensionTitleRotation={-50}
+					initialBrushExtents={initialBrushExtents}
 					onBrush_extents={onBrush_extents} onBrushEnd_extents={onBrushEnd_extents} onBrushEnd_data={this.brushUpdated} />
 				<div className='debugOutput'>{this.debugOutput()}</div>
 			</div>
@@ -95,11 +96,11 @@ let _data=[
 	[3,,9,6,,],
 	[4,-4,16,8,"yes",1]
 ];
-let _brushes=[,,[3,12],,,];
+let _initialBrushExtents={1:[-1.75,-0.8]};
 let _onBrush = function(d) {};
 let _onBrushEnd = function(d) {console.log(d)};
 
 ReactDOM.render(
-	<PCTest width={500} height={150} dimensions={_dimensions} brushExtents={_brushes} data={_data} onBrush_extents={_onBrush} onBrushEnd_extents={_onBrushEnd} onBrushEnd_data={_onBrushEnd}></PCTest>,
+	<PCTest width={500} height={150} dimensions={_dimensions} initialBrushExtents={_initialBrushExtents} data={_data} onBrush_extents={_onBrush} onBrushEnd_extents={_onBrushEnd} onBrushEnd_data={_onBrushEnd}></PCTest>,
 	document.querySelectorAll('.mygraph')[0]
 )

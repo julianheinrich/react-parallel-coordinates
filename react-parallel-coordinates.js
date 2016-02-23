@@ -78,7 +78,7 @@ var ParallelCoordinatesComponent = React.createClass ({
 			//////////.on("render", function (d) { console.log('onRender') })
 
 		if (this.props.initialBrushExtents) {// set initial brushes
-			this.pc.setBrushExtents(this.props.initialBrushExtents)
+			this.pc.brushExtents(this.props.initialBrushExtents)
 		}
 		//this.pc.render()
 	},
