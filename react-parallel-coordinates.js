@@ -92,6 +92,8 @@ var ParallelCoordinatesComponent = React.createClass ({
 		var dimensions = _.map(this.props.dimensionsVisible, (d, key)=>{return d.value})
 		var dimensionTitles = _.map(this.props.dimensionsVisible, (d, key)=>{return d.label})
 		this.pc = this.pc
+			.width(this.props.width)
+			.height(this.props.height)
 			.dimensions(dimensions)
 			.dimensionTitles(dimensionTitles)
 			.autoscale()
@@ -119,7 +121,8 @@ var ParallelCoordinatesComponent = React.createClass ({
 		
 		return (
 			(JSON.stringify(nextProps.dimensionsVisible) !== JSON.stringify(this.props.dimensionsVisible)) ||
-			(JSON.stringify(nextProps.dataHighlighted) !== JSON.stringify(this.props.dataHighlighted))
+			(JSON.stringify(nextProps.dataHighlighted) !== JSON.stringify(this.props.dataHighlighted) ||
+			(nextProps.width != this.props.width) || (nextProps.height != this.props.height))
 			)
 		//return (nextProps !== this.props)
 	},
