@@ -85,13 +85,14 @@ var ParallelCoordinatesComponent = React.createClass ({
 	componentDidUpdate: function () { // update w/ new data http://blog.siftscience.com/blog/2015/4/6/d-threeact-how-sift-science-made-d3-react-besties
 		//console.log('componentDidUpdate')
 		var self = this
-		
+
 		// keep brush
 		var brushExtents = this.pc.brushExtents()
-		
+
 		var dimensions = _.map(this.props.dimensionsVisible, (d, key)=>{return d.value})
 		var dimensionTitles = _.map(this.props.dimensionsVisible, (d, key)=>{return d.label})
 		this.pc = this.pc
+			.data(this.props.data)
 			.width(this.props.width)
 			.height(this.props.height)
 			.dimensions(dimensions)
@@ -107,22 +108,23 @@ var ParallelCoordinatesComponent = React.createClass ({
 			.brushExtents(brushExtents)
 			.on("brushend", function (d) { self.onBrushEnd(d) })
 			.on("brush", function (d) { self.onBrush(d) })
-			
+
 		if (this.props.dataHighlighted !== undefined && this.props.dataHighlighted.length > 0) {
 			this.pc = this.pc.highlight(this.props.dataHighlighted)
 		}
-		
+
 	},/*,
 	componentWillUnmount: function () { // clean up
 		console.log('componentWillUnmount')
 	},*/
 	shouldComponentUpdate: function (nextProps, nextState) {
 		//return false
-		
+
 		return (
 			(JSON.stringify(nextProps.dimensionsVisible) !== JSON.stringify(this.props.dimensionsVisible)) ||
 			(JSON.stringify(nextProps.dataHighlighted) !== JSON.stringify(this.props.dataHighlighted) ||
-			(nextProps.width != this.props.width) || (nextProps.height != this.props.height))
+			(nextProps.width != this.props.width) || (nextProps.height != this.props.height)) ||
+			(nextProps.data != this.props.data)
 			)
 		//return (nextProps !== this.props)
 	},
