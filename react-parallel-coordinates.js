@@ -11,7 +11,8 @@ require('./parallel-coordinates/d3.parcoords.css'); // TODO: find a css solution
 var ParallelCoordinatesComponent = React.createClass ({
 	getDefaultProps: function() {
 		return {
-			state: {}
+			state: {},
+			dimensionTitleRotation: -50,
 		};
 	},
 	onBrushEnd: function (data) {
@@ -38,7 +39,7 @@ var ParallelCoordinatesComponent = React.createClass ({
 				shadowColor: "#f3f3f3", // does not exist in current PC version
 				width: this.props.width,
 				height: this.props.height,
-				dimensionTitleRotation: this.props.dimensionTitleRotation || -50,
+				dimensionTitleRotation: this.props.dimensionTitleRotation,
 				margin: { top: 33, right: 0, bottom: 12, left: 0 },
 				nullValueSeparator: "bottom"
 			})( DOMNode )
